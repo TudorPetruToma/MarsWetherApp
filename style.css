@@ -1,0 +1,434 @@
+*,
+*::before,
+*::after{
+    box-sizing: border-box;
+}
+
+:root{
+    --fw-light: 100;
+    --fw-normal: 300;
+    --fw-semi: 400;
+    --fw-bold: 500;
+    --fs-h1: 1.25rem; 
+    --fs-h2: 1.75rem;
+    --fs-body: 1rem;
+    --fs-xl: 4rem;
+    --clr-light: #fff;
+    --clr-gray: #989898;
+    --clr-dark: #444;
+    --clr-accent: rgb(240, 130, 40);
+    --clr-accent-dark: #613131;
+    --border: solid .3rem;
+}
+
+.sr-only:not(:focus):not(:active){
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 1px;
+}
+
+body{
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.6;
+    background-image: url(img/sergey-kuydin-screen4.jpg);
+    background-size: cover;
+    height: 100vh;
+    color: var(--clr-light);
+    min-height: 110vh;
+}
+
+h1,
+h2,
+h3{
+    line-height: 1;
+}
+
+a{
+    color: var(--clr-accent)
+}
+
+a:hover{
+    color: var(--clr-gray)
+}
+
+.main-title{
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-normal);
+    text-shadow: 1.5px 2.5px 4px black ;
+    text-transform: uppercase;
+    color: var(--clr-accent);
+    letter-spacing: 1.5px;
+    grid-column: 1 / -1;
+}
+
+.section-title{
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-bold);
+    margin: 0;
+}
+
+.section-title-date{
+    font-size: var(--fs-xl)
+}
+
+.reading{
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-normal);
+    margin: 0;
+    color: var(--clr-gray);
+}
+
+.mars-current-weather{
+    background: rgba(0, 0, 0, .6);
+    padding: 3rem 2rem 2rem;
+    max-width: 1000px;
+    margin: .3rem;
+}
+
+.date{
+    grid-column: 1 / 2;
+}
+
+.temperature{
+    padding: 2rem 0;
+}
+
+.wind{
+    display: grid;
+    column-gap: 1.5rem;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: min-content 1fr;
+    grid-auto-flow: dense;
+    align-self: start;
+}
+
+.wind__direction{
+    --size: 4rem;
+    width: var(--size);
+    height: var(--size);
+    background-color: rgba(255, 255, 255, .4);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    grid-column: 2 / 3;
+    grid-row: 1 / span 2;
+}
+
+.wind__arrow{
+    /*this should be updated in JS to set correct direction*/
+    --direction: 180deg;
+    --size: .7rem;
+    width: var(--size);
+    height: calc(var(--size) * 3);
+    background: var(--clr-light);
+    clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+    transform: translateY(-50%) rotate(var(--direction));
+    transform-origin: bottom center;
+    transition: transform 500ms ease;
+}
+
+.section-title,
+.reading{
+    grid-column: 1 / 2;
+}
+
+.info{
+    grid-column: 1 / 3;
+    font-weight: var(--fw-light);
+}
+
+.date__day{
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-normal);
+    margin: 0;
+    color: var(--clr-gray);
+}
+
+.unit{
+    grid-column: 3 / 4;
+    place-self: end;
+    color: var(--clr-light);
+    display: flex;
+    gap: .5rem;
+    opacity: .7;
+    transition: opacity 300ms linear;
+}
+
+.unit:hover{
+    opacity: 1;
+    color: var(--clr-accent);
+}
+
+.unit label{
+    cursor: pointer;
+}
+
+.unit input{
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.unit__toggle{
+    cursor: pointer;
+    width: 3rem;
+    border: 2px solid var(--clr-light);
+    background: transparent;
+    padding: 0;
+    border-radius: 100vmax;
+    margin: 0 .5rem;
+}
+
+.unit__toggle::after{
+    content: "";
+    display: block;
+    background: var(--clr-accent);
+    border-radius: 50%;
+    height: 1rem;
+    margin: 3px;
+    margin-left: auto;
+    width: 1rem;
+}
+
+.unit :checked ~ .unit__toggle::after{
+   margin-left: 3px;
+
+}
+
+.previous-weather{
+    background: rgba(0, 0, 0, .6);
+    color: var(--clr-dark);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: translateY(55%);
+    transition: transform 500ms ease;
+    padding: 3rem;
+    border: 0;
+}
+
+.show-previous-weather{
+    position: absolute;
+    background: rgba(0, 0, 0, .6);
+    left: 50%;
+    width: 10rem;
+    transform: translate(-50%, calc(-95% - 3rem));
+    text-align: center;
+    font-size: var(--fs-h2);
+    line-height: 1;
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    cursor: pointer;
+    color: var(--clr-gray);
+    border: 0;
+    font-family: inherit;
+}
+
+.show-previous-weather:hover,
+.show-previous-weather:focus{
+    color: var(--clr-accent)
+}
+
+.show-previous-weather .arrow{
+    display: block;
+    transform: rotate(0);
+    transition: transform 450ms ease;
+}
+
+.previous-weather-title{
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.previous-days{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.previous-day{
+    opacity: 0;
+    color: var(--clr-gray)
+}
+
+.previous-day > *{
+    margin: .4rem;
+}
+
+.previous-day__more-info{
+    color: var(--clr-accent);
+    background: rgba(0, 0, 0, .2);
+    border: 1px solid var(--clr-accent);
+    border-radius: 100vmax;
+    padding: .175rem;
+    text-transform: uppercase;
+    font-size: .75rem;
+    cursor: pointer;
+}
+
+.previous-day__date{
+    font-size: .75rem;
+    color: var(--clr-accent)
+}
+
+.show-weather.previous-weather{
+    transform: translateY(0);
+    
+}
+
+.show-weather.previous-weather .arrow{
+    display: block;
+    transform: rotate(180deg) translateY(-5px);
+}
+
+
+.show-weather.previous-weather .previous-day{
+    animation: slide 800ms forwards;
+}
+
+.show-weather.previous-weather .previous-weather-title{
+    animation: slide 1000ms forwards;
+}
+
+.show-weather.previous-weather .previous-weather-title{
+    text-align: left;
+}
+
+.show-weather.previous-weather .previous-day:nth-child(1){
+    animation-delay: 100ms
+}
+
+.show-weather.previous-weather .previous-day:nth-child(2){
+    animation-delay: 150ms
+}
+
+.show-weather.previous-weather .previous-day:nth-child(3){
+    animation-delay: 200ms
+}
+
+.show-weather.previous-weather .previous-day:nth-child(4){
+    animation-delay: 250ms
+}
+
+.show-weather.previous-weather .previous-day:nth-child(5){
+    animation-delay: 300ms
+}
+
+.show-weather.previous-weather .previous-day:nth-child(6){
+    animation-delay: 350ms
+}
+
+.show-weather.previous-weather .previous-day:nth-child(7){
+    animation-delay: 400ms
+}
+
+@keyframes slide{
+    0% {
+        opacity: 0;
+        transform: translateY(50%);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (min-width: 600px){
+    .mars-current-weather{
+        display: grid;
+        row-gap: 2rem;
+        grid-template-columns: repeat(2, 1fr) ;
+    }
+
+    .date{
+        grid-column: 1 / -1;
+    }
+
+    .temperature{
+        grid-column: 1 / 2;
+        padding: 0;
+    }
+
+    .wind{
+        grid-column: 2 / 3;
+    }
+
+}
+
+@media (min-width: 900px){
+    :root{
+        --fs-h1: 1.5rem; 
+        --fs-h2: 2.25rem;
+        --fs-body: 1rem;
+        --fs-xl: 3.5rem;
+    }
+    
+    body{
+        height: 100vh;
+        overflow: hidden;
+    }
+    .mars-current-weather{
+        padding: 2rem;
+        margin: 4rem 1rem 0 5rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .temperature{
+        grid-column: 2 / 3;
+        border-left: var(--border) var(--clr-accent);
+        border-right: var(--border) var(--clr-accent);
+        padding: 0 2rem;;
+    }
+
+    .date{
+        grid-column: 1 / 2;
+    }
+
+    .wind{
+        grid-column: 3 / 4;
+    }
+
+    .section-title,
+    .reading{
+        grid-column: 2 / 3;
+}
+
+    .wind__direction{
+        --size: 5rem;
+        width: var(--size);
+        height: var(--size);
+        background-color: rgba(255, 255, 255, .4);
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        grid-column: 2 / 3;
+        grid-row: 1 / span 2;
+}
+
+    .wind__arrow{
+        --size: 1rem;
+        }
+
+    .info{
+        grid-column: 1 / 3;
+
+    }
+}
+
+
+@media(max-width: 900px){
+    .unit{
+        position: absolute;
+        left: 2.8rem;
+        top: 1.5rem;
+    }
+
+}
